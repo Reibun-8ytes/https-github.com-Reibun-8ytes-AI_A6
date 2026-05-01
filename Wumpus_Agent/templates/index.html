@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wumpus World Logic Agent</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🧠</span>
+        <div>
+          <h1>WUMPUS WORLD</h1>
+          <div class="subtitle">PROPOSITIONAL LOGIC AGENT</div>
+        </div>
+      </div>
+      <div id="status-banner" class="status-banner">🟢 Agent initialized. Awaiting parameters.</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Left Sidebar: Controls -->
+    <div class="sidebar">
+      <div class="card">
+        <div class="card-title">Environment Setup</div>
+        <div class="input-grid">
+          <label><span>Rows (2-10)</span><input type="number" id="inp-rows" value="4"></label>
+          <label><span>Cols (2-10)</span><input type="number" id="inp-cols" value="4"></label>
+          <label class="full"><span>Pits</span><input type="number" id="inp-pits" value="2"></label>
+        </div>
+        <div class="btn-row">
+          <button id="btn-new" class="btn btn-primary">New Game</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Execution Controls</div>
+        <div class="btn-row">
+          <button id="btn-step" class="btn btn-accent">Step</button>
+          <button id="btn-auto" class="btn btn-accent">▶ Auto-Run</button>
+        </div>
+        <div class="speed-row">
+          <span class="speed-icon">⏱️</span>
+          <input type="range" id="speed-slider" min="50" max="1000" value="650">
+          <div class="speed-label" id="speed-label">Medium</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Options</div>
+        <div class="btn-row">
+          <button id="btn-reveal" class="btn btn-ghost">👁 Reveal Truth</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center: Grid -->
+    <div class="grid-section">
+      <div id="grid" class="grid"></div>
+    </div>
+
+    <!-- Right Sidebar: Stats & KB -->
+    <div class="sidebar-right">
+      <div class="card">
+        <div class="card-title">Agent Metrics</div>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div id="metric-infer" class="metric-value accent">0</div>
+            <div class="metric-label">Inference Steps</div>
+          </div>
+          <div class="metric-item">
+            <div id="metric-score" class="metric-value">0</div>
+            <div class="metric-label">Score</div>
+          </div>
+          <div class="metric-item">
+            <div id="metric-cells" class="metric-value">0</div>
+            <div class="metric-label">Cells Visited</div>
+          </div>
+        </div>
+        <div class="card-title" style="margin-top:1rem;">Current Percepts</div>
+        <div id="percepts" class="percept-row">
+          <span class="tag none">— None</span>
+        </div>
+      </div>
+
+      <div class="card log-card">
+        <div class="card-title">Agent Action Log</div>
+        <div id="agent-log" class="log-scroll"></div>
+      </div>
+
+      <div class="card kb-card">
+        <div class="card-title">Knowledge Base (CNF clauses)</div>
+        <div id="kb-clauses" class="kb-scroll"></div>
+        <div class="kb-hint" style="margin-top:0.5rem">Displaying derived rules constraining safe-cell selection.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Zero-Dependency Python Implementation • Uses Resolution Refutation
+  </div>
+
+  <!-- Game Popup Overlay -->
+  <div id="popup-overlay" class="popup-overlay hidden" data-type="start">
+    <div id="popup-box" class="popup-box">
+      <div class="popup-particles">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div id="popup-title" class="popup-title">🧠 Logic Agent Deployed</div>
+      <div id="popup-body" class="popup-body">Grid: <strong>4 × 4</strong> &nbsp;|&nbsp; Pits: <strong>2</strong></div>
+      <div id="popup-sub" class="popup-sub">Python backend uses Propositional Resolution</div>
+      <button id="popup-btn" class="btn popup-btn" onclick="document.getElementById('btn-new').click()">▶ Start</button>
+    </div>
+  </div>
+
+  <script src="/static/js/ui.js"></script>
+</body>
+</html>
